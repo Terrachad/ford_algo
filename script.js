@@ -1,5 +1,5 @@
-const numNodes = 3;
-const numEdges = 3;
+const numNodes = 5;
+const numEdges = 6;
 let nodes = [];
 let links = [];
 let departureNode = 'A';
@@ -195,7 +195,6 @@ function updateVisualization() {
 document.getElementById('visualizeButton').addEventListener('click', function() {
     const { distances, predecessor } = bellmanFord(nodes, links, departureNode);
     visualizeStep(departureNode, distances, predecessor);
-    populateConnectionsTable(links); // Populate connections table
 });
 
 function bellmanFord(nodes, links, source) {
@@ -220,7 +219,7 @@ function bellmanFord(nodes, links, source) {
             if (distances[u] + weight < distances[v]) {
                 distances[v] = distances[u] + weight;
                 predecessor[v] = u;
-                console.log(`Updated distance to ${v} to ${distances[v]}`);
+                console.log(`Updated distance to ${v} to ${distances[v]} ❤️`);
             }
         });
     }
@@ -231,14 +230,14 @@ function bellmanFord(nodes, links, source) {
       const v = link.target;
       const weight = link.weight;
       if (distances[u] + weight < distances[v]) {
-        console.log('Graph contains negative cycle');
+        console.log('Graph contains negative cycle 😨😨😨');
       }
     });
 
     // If departure node is the same as the target node, set the distance to 0
     if (distances[source] !== 0) {
         distances[source] = 0;
-        console.log(`Updated distance to ${source} to ${distances[source]}`);
+        console.log(`Updated distance to ${source} to ${distances[source]} ❤️`);
     }
   
     return { distances, predecessor };
