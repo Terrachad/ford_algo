@@ -200,22 +200,22 @@ document.getElementById('visualizeButton').addEventListener('click', function() 
 function bellmanFord(nodes, links, source) {
     const distances = {};
     const predecessor = {};
-    
+
     // Initialize distances and predecessors
     nodes.forEach(node => {
-      distances[node.id] = Infinity;
-      predecessor[node.id] = null;
+        distances[node.id] = Infinity;
+        predecessor[node.id] = null;
     });
     distances[source] = 0; // Correct initialization for the source node
-  
+
     // Relax edges repeatedly
     for (let i = 0; i < nodes.length - 1; i++) {
-    console.log(`Iteration ${i + 1}`);
+        console.log(`Iteration ${i + 1}`);
         links.forEach(link => {
-        const u = link.source.id; // Accessing the 'id' property of the source node
-        const v = link.target.id; // Accessing the 'id' property of the target node
-        const weight = link.weight;
-        console.log(`Processing edge (${u}, ${v}) with weight ${weight}`);
+            const u = link.source.id; // Accessing the 'id' property of the source node
+            const v = link.target.id; // Accessing the 'id' property of the target node
+            const weight = link.weight;
+            console.log(`Processing edge (${u}, ${v}) with weight ${weight}`);
             if (distances[u] + weight < distances[v]) {
                 distances[v] = distances[u] + weight;
                 predecessor[v] = u;
@@ -223,25 +223,26 @@ function bellmanFord(nodes, links, source) {
             }
         });
     }
-  
-    // Check for negative cycles
-    links.forEach(link => {
-      const u = link.source;
-      const v = link.target;
-      const weight = link.weight;
-      if (distances[u] + weight < distances[v]) {
-        console.log('Graph contains negative cycle 😨😨😨');
-      }
-    });
-
     // If departure node is the same as the target node, set the distance to 0
     if (distances[source] !== 0) {
         distances[source] = 0;
         console.log(`Updated distance to ${source} to ${distances[source]} ❤️`);
     }
-  
+
+    // Check for negative cycles
+    links.forEach(link => {
+        const u = link.source;
+        const v = link.target;
+        const weight = link.weight;
+        if (distances[u] + weight < distances[v]) {
+            console.log('Graph contains negative cycle 😨😨😨');
+        }
+    });
+
+
+
     return { distances, predecessor };
-  }
+}
 
 
 // Function to visualize Bellman-Ford step
